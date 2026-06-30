@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#E63946" />
+  <title>暑假修行册 · 哪吒与敖丙</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- 背景祥云装饰层 -->
+  <div class="bg-clouds" aria-hidden="true"></div>
+
+  <header class="banner">
+    <!-- 哪吒头像（左） -->
+    <div class="avatar avatar-nezha" aria-hidden="true">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="char-svg">
+        <defs>
+          <radialGradient id="bgNezha" cx="50%" cy="100%" r="100%">
+            <stop offset="0%" stop-color="#FFE27A" />
+            <stop offset="50%" stop-color="#FF7A1A" />
+            <stop offset="100%" stop-color="#E63946" />
+          </radialGradient>
+          <linearGradient id="hairNezha" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#E63946" />
+            <stop offset="100%" stop-color="#7A2E18" />
+          </linearGradient>
+          <linearGradient id="goldTrim" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#FFE27A" />
+            <stop offset="100%" stop-color="#C9871E" />
+          </linearGradient>
+          <clipPath id="clipNezha"><circle cx="50" cy="50" r="50" /></clipPath>
+        </defs>
+
+        <!-- 圆形背景 -->
+        <circle cx="50" cy="50" r="50" fill="url(#bgNezha)" />
+
+        <g clip-path="url(#clipNezha)">
+          <!-- 火尖枪（背后斜插） -->
+          <g class="weapon spear">
+            <g transform="rotate(-32 50 50)">
+              <!-- 枪杆 -->
+              <rect x="48.5" y="-6" width="2" height="115" fill="#3A1810" />
+              <rect x="48.5" y="-6" width="1" height="115" fill="#5C2E14" opacity="0.7" />
+              <!-- 枪头 -->
+              <path d="M46 -4 L49.5 -16 L53 -4 Z" fill="url(#goldTrim)" stroke="#7A4A12" stroke-width="0.4" />
+              <!-- 枪头火焰 -->
+              <g class="spear-flame">
+                <path d="M47 -10 Q49.5 -22 52 -10 Q51 -14 49.5 -16 Q48 -14 47 -10 Z" fill="#FF7A1A" />
+                <path d="M48 -12 Q49.5 -19 51 -12 Q50.4 -15 49.5 -16 Q48.6 -15 48 -12 Z" fill="#FFE27A" />
+              </g>
+              <!-- 红缨穗 -->
+              <g class="tassel">
+                <path d="M46 -3 Q41 5 44 11" stroke="#E63946" stroke-width="1.4" fill="none" stroke-linecap="round" />
+                <path d="M48 -2 Q44 6 46 13" stroke="#E63946" stroke-width="1.2" fill="none" stroke-linecap="round" />
+                <path d="M53 -3 Q58 5 55 11" stroke="#E63946" stroke-width="1.4" fill="none" stroke-linecap="round" />
+                <path d="M51 -2 Q55 6 53 13" stroke="#E63946" stroke-width="1.2" fill="none" stroke-linecap="round" />
+              </g>
+              <!-- 枪尾装饰 -->
+              <circle cx="49.5" cy="106" r="2.2" fill="url(#goldTrim)" />
+            </g>
+          </g>
+
+          <!-- 双丸子头 -->
+          <g>
+            <!-- 左髻底座 -->
+            <ellipse cx="26" cy="28" rx="9" ry="7" fill="url(#hairNezha)" stroke="#3A1810" stroke-width="0.6" />
+            <circle cx="26" cy="28" r="3" fill="url(#goldTrim)" stroke="#7A4A12" stroke-width="0.4" />
+            <!-- 右髻 -->
+            <ellipse cx="74" cy="28" rx="9" ry="7" fill="url(#hairNezha)" stroke="#3A1810" stroke-width="0.6" />
+            <circle cx="74" cy="28" r="3" fill="url(#goldTrim)" stroke="#7A4A12" stroke-width="0.4" />
+          </g>
+
+          <!-- 刘海 / 头发 -->
+          <path d="M22 42 Q22 28 32 24 L36 32 L44 26 L50 30 L56 26 L64 32 L68 24 Q78 28 78 42 L72 46 L60 38 L50 42 L40 38 L28 46 Z"
+                fill="url(#hairNezha)" stroke="#3A1810" stroke-width="0.5" />
+
+          <!-- 脸 -->
+          <ellipse cx="50" cy="54" rx="20" ry="22" fill="#FFE3C4" stroke="#7A2E18" stroke-width="0.8" />
+
+          <!-- 朱砂额心 -->
+          <circle cx="50" cy="44" r="3" fill="#E63946" />
+          <circle cx="50" cy="44" r="1" fill="#FFE27A" opacity="0.7" />
+
+          <!-- 凤眼 -->
+          <path d="M38 56 Q42 52 46 56 Q42 58 38 56 Z" fill="#2A1F1A" />
+          <path d="M54 56 Q58 52 62 56 Q58 58 54 56 Z" fill="#2A1F1A" />
+          <circle cx="42" cy="55" r="0.8" fill="#fff" />
+          <circle cx="58" cy="55" r="0.8" fill="#fff" />
+
+          <!-- 浓眉 -->
+          <path d="M37 50 Q42 47 47 50" stroke="#5A1A0E" stroke-width="1.8" fill="none" stroke-linecap="round" />
+          <path d="M53 50 Q58 47 63 50" stroke="#5A1A0E" stroke-width="1.8" fill="none" stroke-linecap="round" />
+
+          <!-- 腮红 -->
+          <ellipse cx="36" cy="64" rx="3.5" ry="2.2" fill="#FF8888" opacity="0.55" />
+          <ellipse cx="64" cy="64" rx="3.5" ry="2.2" fill="#FF8888" opacity="0.55" />
+
+          <!-- 嘴 -->
+          <path d="M44 68 Q50 73 56 68" stroke="#7A2E18" stroke-width="1.4" fill="none" stroke-linecap="round" />
+          <path d="M46 70 Q50 71 54 70" stroke="#E63946" stroke-width="0.8" fill="none" stroke-linecap="round" opacity="0.6" />
+
+          <!-- 脖子 -->
+          <rect x="46" y="74" width="8" height="6" fill="#FFC79A" />
+
+          <!-- 红肚兜 -->
+          <path d="M28 84 Q50 92 72 84 L76 100 L24 100 Z" fill="#E63946" stroke="url(#goldTrim)" stroke-width="0.8" />
+          <!-- 金色八卦 -->
+          <circle cx="50" cy="92" r="4" fill="url(#goldTrim)" stroke="#7A4A12" stroke-width="0.4" />
+          <circle cx="50" cy="92" r="1.2" fill="#7A2E18" />
+          <!-- 衣领装饰 -->
+          <path d="M28 84 Q50 92 72 84" stroke="url(#goldTrim)" stroke-width="1.5" fill="none" />
+
+          <!-- 混天绫 红色飘带 -->
+          <g class="ribbon">
+            <path d="M72 86 Q88 92 84 102 Q92 100 94 88" stroke="#FF5252" stroke-width="2.6" fill="none" stroke-linecap="round" opacity="0.9" />
+            <path d="M28 86 Q12 92 16 102 Q8 100 6 88" stroke="#FF5252" stroke-width="2.6" fill="none" stroke-linecap="round" opacity="0.9" />
+          </g>
+        </g>
+      </svg>
+
+      <!-- 悬浮乾坤圈装饰 -->
+      <span class="deco-ring deco-ring-1"></span>
+      <span class="deco-ring deco-ring-2"></span>
+    </div>
+
+    <div class="banner-title">
+      <h1>暑假修行册</h1>
+      <p class="subtitle" id="welcomeText">三头六臂，每日精进</p>
+    </div>
+
+    <!-- 敖丙头像（右） -->
+    <div class="avatar avatar-aobing" aria-hidden="true">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="char-svg">
+        <defs>
+          <radialGradient id="bgAobing" cx="50%" cy="100%" r="100%">
+            <stop offset="0%" stop-color="#E8F4FB" />
+            <stop offset="50%" stop-color="#3FA7D6" />
+            <stop offset="100%" stop-color="#1B4E6B" />
+          </radialGradient>
+          <linearGradient id="hairAobing" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#7EC9E8" />
+            <stop offset="100%" stop-color="#1B4E6B" />
+          </linearGradient>
+          <linearGradient id="bladeIce" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#FFFFFF" />
+            <stop offset="60%" stop-color="#CFE9F5" />
+            <stop offset="100%" stop-color="#3FA7D6" />
+          </linearGradient>
+          <linearGradient id="goldTrimA" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#FFE27A" />
+            <stop offset="100%" stop-color="#C9871E" />
+          </linearGradient>
+          <clipPath id="clipAobing"><circle cx="50" cy="50" r="50" /></clipPath>
+        </defs>
+
+        <!-- 圆形背景 -->
+        <circle cx="50" cy="50" r="50" fill="url(#bgAobing)" />
+
+        <g clip-path="url(#clipAobing)">
+          <!-- 寒冰剑（背后斜插） -->
+          <g class="weapon sword">
+            <g transform="rotate(32 50 50)">
+              <!-- 剑身 -->
+              <path d="M47 -12 L53 -12 L53 70 L50 75 L47 70 Z" fill="url(#bladeIce)" stroke="#1B4E6B" stroke-width="0.5" />
+              <!-- 剑脊高光 -->
+              <line x1="50" y1="-8" x2="50" y2="70" stroke="#FFFFFF" stroke-width="0.6" opacity="0.85" class="blade-shine" />
+              <!-- 剑尖延伸 -->
+              <path d="M47 -12 L50 -22 L53 -12 Z" fill="#FFFFFF" stroke="#3FA7D6" stroke-width="0.5" />
+              <!-- 护手 -->
+              <path d="M40 70 L60 70 L57 74 L43 74 Z" fill="url(#goldTrimA)" stroke="#7A4A12" stroke-width="0.4" />
+              <!-- 剑柄 -->
+              <rect x="47.5" y="74" width="5" height="14" fill="#1B4E6B" />
+              <line x1="48" y1="76" x2="52" y2="78" stroke="#7EC9E8" stroke-width="0.5" />
+              <line x1="48" y1="80" x2="52" y2="82" stroke="#7EC9E8" stroke-width="0.5" />
+              <line x1="48" y1="84" x2="52" y2="86" stroke="#7EC9E8" stroke-width="0.5" />
+              <!-- 剑首 -->
+              <circle cx="50" cy="92" r="3" fill="url(#goldTrimA)" stroke="#7A4A12" stroke-width="0.4" />
+              <!-- 冰寒光 -->
+              <g class="ice-shine" opacity="0.6">
+                <path d="M50 -8 L50 60" stroke="#FFFFFF" stroke-width="0.4" />
+              </g>
+            </g>
+          </g>
+
+          <!-- 龙角 -->
+          <g>
+            <path d="M26 32 Q14 14 6 18 Q18 20 24 38 Z" fill="#1B4E6B" stroke="#0E2E40" stroke-width="0.6" />
+            <path d="M14 22 Q10 18 8 16" stroke="#0E2E40" stroke-width="0.5" fill="none" />
+            <path d="M74 32 Q86 14 94 18 Q82 20 76 38 Z" fill="#1B4E6B" stroke="#0E2E40" stroke-width="0.6" />
+            <path d="M86 22 Q90 18 92 16" stroke="#0E2E40" stroke-width="0.5" fill="none" />
+          </g>
+
+          <!-- 蓝色头发 / 龙鬃 -->
+          <path d="M22 42 Q22 26 32 22 L36 32 L44 26 L50 30 L56 26 L64 32 L68 22 Q78 26 78 42 L72 46 L60 38 L50 42 L40 38 L28 46 Z"
+                fill="url(#hairAobing)" stroke="#0E2E40" stroke-width="0.5" />
+
+          <!-- 脸 -->
+          <ellipse cx="50" cy="54" rx="20" ry="22" fill="#F0FAFF" stroke="#1B4E6B" stroke-width="0.8" />
+
+          <!-- 额心雪花 -->
+          <g transform="translate(50,44)">
+            <line x1="0" y1="-4" x2="0" y2="4" stroke="#3FA7D6" stroke-width="1.2" stroke-linecap="round" />
+            <line x1="-3.5" y1="-2" x2="3.5" y2="2" stroke="#3FA7D6" stroke-width="1.2" stroke-linecap="round" />
+            <line x1="-3.5" y1="2" x2="3.5" y2="-2" stroke="#3FA7D6" stroke-width="1.2" stroke-linecap="round" />
+            <circle cx="0" cy="0" r="1" fill="#1B4E6B" />
+          </g>
+
+          <!-- 龙鳞（脸颊） -->
+          <g opacity="0.55">
+            <path d="M32 60 Q35 62 32 64 Q29 62 32 60 Z" fill="#3FA7D6" />
+            <path d="M36 63 Q39 65 36 67 Q33 65 36 63 Z" fill="#3FA7D6" />
+            <path d="M32 66 Q35 68 32 70 Q29 68 32 66 Z" fill="#3FA7D6" />
+            <path d="M68 60 Q71 62 68 64 Q65 62 68 60 Z" fill="#3FA7D6" />
+            <path d="M64 63 Q67 65 64 67 Q61 65 64 63 Z" fill="#3FA7D6" />
+            <path d="M68 66 Q71 68 68 70 Q65 68 68 66 Z" fill="#3FA7D6" />
+          </g>
+
+          <!-- 凤眼 -->
+          <path d="M38 56 Q42 52 46 56 Q42 58 38 56 Z" fill="#1B4E6B" />
+          <path d="M54 56 Q58 52 62 56 Q58 58 54 56 Z" fill="#1B4E6B" />
+          <circle cx="42" cy="55" r="0.8" fill="#fff" />
+          <circle cx="58" cy="55" r="0.8" fill="#fff" />
+
+          <!-- 冷峻眉毛 -->
+          <path d="M37 50 L47 51" stroke="#1B4E6B" stroke-width="1.6" stroke-linecap="round" />
+          <path d="M53 51 L63 50" stroke="#1B4E6B" stroke-width="1.6" stroke-linecap="round" />
+
+          <!-- 嘴 -->
+          <path d="M44 68 Q50 71 56 68" stroke="#1B4E6B" stroke-width="1.4" fill="none" stroke-linecap="round" />
+
+          <!-- 脖子 -->
+          <rect x="46" y="74" width="8" height="6" fill="#E0F1FB" />
+
+          <!-- 蓝袍 -->
+          <path d="M28 84 Q50 92 72 84 L76 100 L24 100 Z" fill="url(#hairAobing)" stroke="url(#goldTrimA)" stroke-width="0.8" />
+          <!-- 衣领 -->
+          <path d="M40 84 L50 92 L60 84 L60 100 L40 100 Z" fill="#1B4E6B" stroke="url(#goldTrimA)" stroke-width="0.5" />
+          <!-- 金边 -->
+          <path d="M28 84 Q50 92 72 84" stroke="url(#goldTrimA)" stroke-width="1.5" fill="none" />
+          <!-- 龙鳞图样 -->
+          <g opacity="0.5">
+            <path d="M30 96 Q34 94 38 96" stroke="#7EC9E8" stroke-width="0.8" fill="none" />
+            <path d="M62 96 Q66 94 70 96" stroke="#7EC9E8" stroke-width="0.8" fill="none" />
+          </g>
+        </g>
+      </svg>
+
+      <!-- 悬浮雪花装饰 -->
+      <span class="deco-flake deco-flake-1">❄</span>
+      <span class="deco-flake deco-flake-2">❅</span>
+      <span class="deco-flake deco-flake-3">✦</span>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab-btn active" data-tab="today" role="tab" aria-selected="true">
+      <span class="tab-icon">🔥</span><span class="tab-label">今日</span>
+    </button>
+    <button class="tab-btn" data-tab="dates" role="tab" aria-selected="false">
+      <span class="tab-icon">📅</span><span class="tab-label">日期</span>
+    </button>
+    <button class="tab-btn" data-tab="template" role="tab" aria-selected="false">
+      <span class="tab-icon">⚙️</span><span class="tab-label">模板</span>
+    </button>
+    <button class="tab-btn" data-tab="rewards" role="tab" aria-selected="false">
+      <span class="tab-icon">🎁</span><span class="tab-label">奖励</span>
+    </button>
+  </nav>
+
+  <main>
+    <!-- 今日 -->
+    <section class="tab-panel active" id="panel-today" role="tabpanel">
+      <div class="day-header">
+        <div class="day-header-info">
+          <div class="date-row">
+            <button class="nav-btn" id="prevDayBtn" title="上一天">‹</button>
+            <input type="date" id="currentDate" />
+            <button class="nav-btn" id="nextDayBtn" title="下一天">›</button>
+            <button class="today-btn" id="todayBtn">今天</button>
+          </div>
+          <div class="stars-preview" id="starsPreview" aria-live="polite"></div>
+          <div class="completion-text" id="completionText"></div>
+        </div>
+      </div>
+
+      <div class="task-list" id="taskList"></div>
+
+      <div class="day-note-block">
+        <label for="dayNote">今日总体备注（家长留言）</label>
+        <textarea id="dayNote" rows="3" placeholder="例如：今天精神不错，完成度高，奖励 5 星！"></textarea>
+      </div>
+    </section>
+
+    <!-- 日期 -->
+    <section class="tab-panel" id="panel-dates" role="tabpanel">
+      <div class="section-title">日历总览</div>
+      <p class="section-hint">点击某一天可查看或补打卡。颜色越深表示当天得星越多。</p>
+      <div class="calendar" id="calendar"></div>
+    </section>
+
+    <!-- 模板 -->
+    <section class="tab-panel" id="panel-template" role="tabpanel">
+      <div class="section-title">基础设置</div>
+      <div class="settings-grid">
+        <label>孩子昵称
+          <input type="text" id="childName" placeholder="例如：小哪吒" maxlength="12" />
+        </label>
+        <label>开始日期
+          <input type="date" id="startDate" />
+        </label>
+        <label>结束日期（留空表示不限）
+          <input type="date" id="endDate" />
+        </label>
+      </div>
+
+      <div class="section-title">每日作息模板</div>
+      <p class="section-hint">家长可以编辑作息条目、设置时间、图标和权重（权重越大，对当日星级贡献越大）。</p>
+      <div class="template-list" id="templateList"></div>
+      <button class="primary-btn fire-btn" id="addTaskBtn">＋ 添加作息项</button>
+    </section>
+
+    <!-- 奖励 -->
+    <section class="tab-panel" id="panel-rewards" role="tabpanel">
+      <div class="rewards-summary">
+        <div class="reward-stat">
+          <div class="reward-stat-label">累计修行星</div>
+          <div class="reward-stat-value" id="totalStars">0 <span class="star-emoji">⭐</span></div>
+        </div>
+        <div class="reward-stat">
+          <div class="reward-stat-label">可用星星</div>
+          <div class="reward-stat-value reward-stat-available" id="availableStars">0 <span class="star-emoji">⭐</span></div>
+        </div>
+      </div>
+
+      <div class="section-title">奖励商店</div>
+      <p class="section-hint">完成作息累计星星，可在此兑换喜欢的奖励。</p>
+      <div class="reward-list" id="rewardList"></div>
+      <button class="primary-btn ice-btn" id="addRewardBtn">＋ 添加新奖励</button>
+
+      <div class="section-title">兑换历史</div>
+      <div class="redeemed-list" id="redeemedList"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <button class="ghost-btn" id="exportBtn">导出数据</button>
+    <button class="ghost-btn" id="importBtn">导入数据</button>
+    <button class="ghost-btn danger" id="resetBtn">重置全部</button>
+    <input type="file" id="importFile" accept="application/json" hidden />
+  </footer>
+
+  <!-- 模态弹窗 -->
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <div class="modal" id="modal" role="dialog" aria-modal="true">
+      <div class="modal-title" id="modalTitle">编辑</div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-actions">
+        <button class="ghost-btn" id="modalCancel">取消</button>
+        <button class="primary-btn fire-btn" id="modalOk">确定</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 烟花/雪花特效容器 -->
+  <div class="fx-layer" id="fxLayer" aria-hidden="true"></div>
+
+  <!-- Toast 提示 -->
+  <div class="toast" id="toast" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
