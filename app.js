@@ -121,8 +121,8 @@
       template: Array.isArray(data.template) && data.template.length ? data.template : base.template,
       records: data.records && typeof data.records === 'object' ? data.records : {},
       rewards: {
-        catalog: Array.isArray(data.rewards?.catalog) && data.rewards.catalog.length ? data.rewards.catalog : base.rewards.catalog,
-        redeemed: Array.isArray(data.rewards?.redeemed) ? data.rewards.redeemed : []
+        catalog: (data.rewards && Array.isArray(data.rewards.catalog) && data.rewards.catalog.length) ? data.rewards.catalog : base.rewards.catalog,
+        redeemed: (data.rewards && Array.isArray(data.rewards.redeemed)) ? data.rewards.redeemed : []
       },
       penalties: Array.isArray(data.penalties) ? data.penalties : []
     };
@@ -578,7 +578,6 @@
     if (state.rewards.catalog.length === 0) {
       list.innerHTML = '<div class="empty-hint">还没有奖励，点击下方按钮添加。</div>';
     }
-    const avail = availableStars();
     state.rewards.catalog.forEach((r, idx) => {
       const card = document.createElement('div');
       card.className = 'reward-card';
@@ -836,20 +835,45 @@
       .replace(/'/g, '&#39;');
   }
 
+  // -------- 全局错误拦截：脚本任何位置的报错都显示到页面顶部红条 --------
+  window.addEventListener('error', (e) => {
+    try { showFatalError('window.onerror', e.error || e.message); } catch (_) {}
+  });
+  window.addEventListener('unhandledrejection', (e) => {
+    try { showFatalError('unhandledrejection', e.reason); } catch (_) {}
+  });
+
   // -------- 启动 --------
+  function showFatalError(stage, err) {
+    const msg = (err && err.message) ? err.message : String(err);
+    const stack = (err && err.stack) ? String(err.stack) : '';
+    const banner = document.createElement('div');
+    banner.style.cssText = 'position:fixed;left:0;right:0;top:0;z-index:9999;background:#E63946;color:#fff;padding:12px 16px;font-family:monospace;font-size:13px;line-height:1.5;white-space:pre-wrap;word-break:break-word;max-height:50vh;overflow:auto;box-shadow:0 4px 12px rgba(0,0,0,0.3)';
+    banner.textContent = '⚠️ 启动出错 @ ' + stage + '\n' + msg + '\n\n' + stack + '\n\n请把这段文字截图发给开发者。';
+    document.body.appendChild(banner);
+    console.error('[init failed @ ' + stage + ']', err);
+  }
+
+  function safeRun(stage, fn) {
+    try { fn(); }
+    catch (e) { showFatalError(stage, e); throw e; }
+  }
+
   function init() {
-    // 如果当前日期早于设置的开始日期，把 currentDate 调整为开始日期
-    if (state.settings.startDate && todayISO() < state.settings.startDate) {
-      currentDate = state.settings.startDate;
-    }
-    initTabs();
-    initToday();
-    initTemplate();
-    initRewards();
-    initFooter();
-    renderToday();
-    // 首次保存，确保 storage 中存在键
-    saveState();
+    try {
+      if (state && state.settings && state.settings.startDate && todayISO() < state.settings.startDate) {
+        currentDate = state.settings.startDate;
+      }
+    } catch (e) { showFatalError('settings check', e); }
+
+    safeRun('initTabs',     initTabs);
+    safeRun('initToday',    initToday);
+    safeRun('initTemplate', initTemplate);
+    safeRun('initRewards',  initRewards);
+    safeRun('initFooter',   initFooter);
+    safeRun('renderToday',  renderToday);
+
+    try { saveState(); } catch (e) { showFatalError('saveState', e); }
   }
 
   if (document.readyState === 'loading') {
