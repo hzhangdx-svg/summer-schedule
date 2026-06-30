@@ -603,6 +603,152 @@ main {
   box-shadow: 0 0 0 3px rgba(63, 167, 214, 0.2);
 }
 
+/* ============================== 扣分模块 ============================== */
+
+.penalty-block {
+  margin-top: 14px;
+  background: linear-gradient(135deg, #FFF5F5, #FFFBE9);
+  border: 1px dashed #E8B7A1;
+  border-radius: var(--radius-md);
+  padding: 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+.penalty-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.penalty-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--nezha-red-dark);
+}
+
+.penalty-hint {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+.penalty-btn {
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #FF7A1A, #E63946);
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(230, 57, 70, 0.3);
+  transition: transform 0.1s;
+}
+.penalty-btn:active { transform: scale(0.94); }
+
+.penalty-list {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.penalty-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border: 1px solid #F5D6CB;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 13px;
+}
+
+.penalty-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.penalty-amount {
+  background: linear-gradient(135deg, #E63946, #B5202D);
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 12px;
+  flex: 0 0 auto;
+}
+
+.penalty-reason {
+  color: var(--ink);
+  word-break: break-word;
+}
+
+/* ============================== 弹窗：扣分选项 ============================== */
+
+.amount-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.amount-pill {
+  appearance: none;
+  border: 1.5px solid var(--line);
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px 0;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.1s;
+}
+
+.amount-pill:hover { border-color: var(--nezha-orange); }
+.amount-pill:active { transform: scale(0.94); }
+
+.amount-pill.active {
+  background: linear-gradient(135deg, var(--nezha-red), var(--nezha-orange));
+  border-color: var(--nezha-red-dark);
+  color: #fff;
+  box-shadow: 0 3px 8px rgba(230, 57, 70, 0.3);
+}
+
+.reason-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 4px 0 8px;
+}
+
+.reason-pill {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.reason-pill:hover {
+  background: var(--bg-soft);
+  border-color: var(--nezha-orange);
+  color: var(--nezha-red-dark);
+}
+
 /* ============================== Calendar ============================== */
 
 .calendar {
@@ -664,6 +810,15 @@ main {
 
 .cal-day { font-size: 13px; font-weight: 700; color: var(--ink); }
 .cal-stars { font-size: 11px; margin-top: 2px; line-height: 1; }
+.cal-pen {
+  display: inline-block;
+  margin-left: 2px;
+  color: var(--nezha-red);
+  font-size: 10px;
+}
+.cal-cell.has-penalty {
+  box-shadow: 0 0 0 1.5px var(--nezha-red) inset;
+}
 
 /* 星级颜色：1~5 渐变 */
 .cal-cell.s0 { background: #FAFAFA; }
@@ -795,38 +950,49 @@ main {
 
 .rewards-summary {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
 }
 
 .reward-stat {
-  background: linear-gradient(135deg, var(--nezha-red), var(--nezha-orange));
   color: #fff;
-  border-radius: var(--radius-md);
-  padding: 14px;
+  border-radius: 14px;
+  padding: 12px 6px;
   text-align: center;
   box-shadow: var(--shadow-sm);
 }
 
-.reward-stat-available {
-  background: linear-gradient(135deg, var(--aobing-blue), var(--aobing-deep));
-}
-
-.reward-stat .reward-stat-label {
-  font-size: 12px;
-  opacity: 0.9;
-  letter-spacing: 2px;
+.reward-stat-label {
+  font-size: 11px;
+  opacity: 0.92;
+  letter-spacing: 1px;
 }
 
 .reward-stat-value {
-  font-size: 26px;
+  font-size: 20px;
   font-weight: 800;
   margin-top: 4px;
+  white-space: nowrap;
 }
 
-.reward-stat-value .star-emoji { font-size: 20px; }
+.reward-stat-value .star-emoji { font-size: 16px; }
 
-.reward-stat-available { background: linear-gradient(135deg, var(--aobing-blue), var(--aobing-deep)); }
+.stat-earned   { background: linear-gradient(135deg, var(--nezha-gold), var(--nezha-orange)); }
+.stat-penalty  { background: linear-gradient(135deg, #B5202D, #7A2E18); }
+.stat-spent    { background: linear-gradient(135deg, #6B5B4E, #2A1F1A); }
+.stat-available{ background: linear-gradient(135deg, var(--aobing-blue), var(--aobing-deep)); }
+
+.reward-formula {
+  margin: 8px 4px 14px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  letter-spacing: 1px;
+  background: var(--bg-soft);
+  border-radius: 10px;
+  padding: 6px;
+}
 
 .reward-list, .redeemed-list {
   display: flex;
@@ -1028,6 +1194,27 @@ main {
   text-shadow: 0 0 4px rgba(63, 167, 214, 0.5);
 }
 
+.star-deduct {
+  position: absolute;
+  font-size: 22px;
+  font-weight: 900;
+  color: #fff;
+  background: linear-gradient(135deg, #E63946, #7A2E18);
+  padding: 6px 14px;
+  border-radius: 999px;
+  box-shadow: 0 4px 12px rgba(122, 46, 24, 0.4);
+  pointer-events: none;
+  animation: star-deduct-fly 1.3s ease-out forwards;
+  letter-spacing: 1px;
+}
+
+@keyframes star-deduct-fly {
+  0%   { transform: translateY(0) scale(0.7); opacity: 0; }
+  20%  { transform: translateY(-10px) scale(1.15); opacity: 1; }
+  60%  { transform: translateY(-50px) scale(1);    opacity: 1; }
+  100% { transform: translateY(-110px) scale(0.85); opacity: 0; }
+}
+
 @keyframes snow-fall {
   0%   { transform: translate(0, 0) rotate(0deg); }
   100% { transform: translate(var(--sx, 30px), 110vh) rotate(360deg); }
@@ -1084,4 +1271,6 @@ main {
   .deco-flake-2 { font-size: 11px; }
   .deco-flake-3 { font-size: 10px; }
   .template-row { grid-template-columns: 70px 44px 1fr 50px 32px; gap: 6px; }
+  .rewards-summary { grid-template-columns: 1fr 1fr; }
+  .reward-stat-value { font-size: 18px; }
 }

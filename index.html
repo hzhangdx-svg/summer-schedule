@@ -290,6 +290,17 @@
         <label for="dayNote">今日总体备注（家长留言）</label>
         <textarea id="dayNote" rows="3" placeholder="例如：今天精神不错，完成度高，奖励 5 星！"></textarea>
       </div>
+
+      <div class="penalty-block">
+        <div class="penalty-head">
+          <div>
+            <div class="penalty-title">表现扣分（家长操作）</div>
+            <div class="penalty-hint" id="penaltyHint">今天暂无扣分记录</div>
+          </div>
+          <button class="penalty-btn" id="addPenaltyBtn">⚡ 扣分</button>
+        </div>
+        <div class="penalty-list" id="penaltyList"></div>
+      </div>
     </section>
 
     <!-- 日期 -->
@@ -323,15 +334,24 @@
     <!-- 奖励 -->
     <section class="tab-panel" id="panel-rewards" role="tabpanel">
       <div class="rewards-summary">
-        <div class="reward-stat">
-          <div class="reward-stat-label">累计修行星</div>
-          <div class="reward-stat-value" id="totalStars">0 <span class="star-emoji">⭐</span></div>
+        <div class="reward-stat stat-earned">
+          <div class="reward-stat-label">累计获得</div>
+          <div class="reward-stat-value" id="totalStars">0 ⭐</div>
         </div>
-        <div class="reward-stat">
-          <div class="reward-stat-label">可用星星</div>
-          <div class="reward-stat-value reward-stat-available" id="availableStars">0 <span class="star-emoji">⭐</span></div>
+        <div class="reward-stat stat-penalty">
+          <div class="reward-stat-label">表现扣分</div>
+          <div class="reward-stat-value" id="penaltyStars">0 ⭐</div>
+        </div>
+        <div class="reward-stat stat-spent">
+          <div class="reward-stat-label">已兑换</div>
+          <div class="reward-stat-value" id="spentStars">0 ⭐</div>
+        </div>
+        <div class="reward-stat stat-available">
+          <div class="reward-stat-label">当前可用</div>
+          <div class="reward-stat-value" id="availableStars">0 ⭐</div>
         </div>
       </div>
+      <div class="reward-formula" id="rewardFormula">累计 − 扣分 − 已兑换 = 可用</div>
 
       <div class="section-title">奖励商店</div>
       <p class="section-hint">完成作息累计星星，可在此兑换喜欢的奖励。</p>

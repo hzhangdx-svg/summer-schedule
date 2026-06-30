@@ -79,9 +79,22 @@
           { id: uid('r'), name: '游乐园一日游', cost: 60, icon: '🎢' }
         ],
         redeemed: []
-      }
+      },
+      penalties: []
     };
   }
+
+  // 预设的扣分原因（弹窗里给出快捷按钮，家长也能改写）
+  const PENALTY_PRESETS = [
+    '顶嘴 / 不听管教',
+    '玩手机 / 看电视过度',
+    '挑食 / 不好好吃饭',
+    '故意拖延 / 磨蹭',
+    '说脏话',
+    '欺负同伴',
+    '撒谎',
+    '其他'
+  ];
 
   // -------- 状态管理 --------
   let state = loadState();
@@ -110,7 +123,8 @@
       rewards: {
         catalog: Array.isArray(data.rewards?.catalog) && data.rewards.catalog.length ? data.rewards.catalog : base.rewards.catalog,
         redeemed: Array.isArray(data.rewards?.redeemed) ? data.rewards.redeemed : []
-      }
+      },
+      penalties: Array.isArray(data.penalties) ? data.penalties : []
     };
   }
 
@@ -241,25 +255,116 @@
     $('#dayNote').value = record.note || '';
 
     renderStarsPreview();
+    renderPenalties();
+  }
+
+  function renderPenalties() {
+    const today = state.penalties.filter((p) => p.date === currentDate);
+    const list = $('#penaltyList');
+    const hint = $('#penaltyHint');
+    list.innerHTML = '';
+
+    if (today.length === 0) {
+      hint.textContent = '今天暂无扣分记录';
+      return;
+    }
+
+    const totalToday = today.reduce((s, p) => s + p.amount, 0);
+    hint.textContent = `今天已扣 ${totalToday} ⭐（${today.length} 条记录）`;
+
+    today.forEach((p) => {
+      const item = document.createElement('div');
+      item.className = 'penalty-item';
+      item.innerHTML = `
+        <div class="penalty-info">
+          <span class="penalty-amount">-${p.amount} ⭐</span>
+          <span class="penalty-reason">${escapeHtml(p.reason || '未填写原因')}</span>
+        </div>
+        <button class="mini-btn del" title="撤销这次扣分">撤销</button>
+      `;
+      item.querySelector('.del').addEventListener('click', () => {
+        if (!confirm(`撤销这次扣分？返还 ${p.amount} ⭐`)) return;
+        state.penalties = state.penalties.filter((x) => x.id !== p.id);
+        saveState();
+        renderToday();
+        toast(`已返还 ${p.amount} ⭐`);
+      });
+      list.appendChild(item);
+    });
+  }
+
+  function openPenaltyDialog() {
+    const backdrop = $('#modalBackdrop');
+    $('#modalTitle').textContent = `扣分 · ${formatChinese(currentDate)}`;
+    const body = $('#modalBody');
+    body.innerHTML = `
+      <label>扣几颗星
+        <div class="amount-row" id="amountRow">
+          ${[1, 2, 3, 4, 5].map((n) => `<button type="button" class="amount-pill${n === 1 ? ' active' : ''}" data-amount="${n}">${n} ⭐</button>`).join('')}
+        </div>
+      </label>
+      <label>原因（选一个或自己写）
+        <div class="reason-presets" id="reasonPresets">
+          ${PENALTY_PRESETS.map((r) => `<button type="button" class="reason-pill" data-reason="${escapeHtml(r)}">${escapeHtml(r)}</button>`).join('')}
+        </div>
+        <input type="text" id="penaltyReasonInput" placeholder="例如：边吃边玩手机" />
+      </label>
+    `;
+
+    let amount = 1;
+    body.querySelectorAll('.amount-pill').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        body.querySelectorAll('.amount-pill').forEach((b) => b.classList.toggle('active', b === btn));
+        amount = Number(btn.dataset.amount);
+      });
+    });
+    body.querySelectorAll('.reason-pill').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        $('#penaltyReasonInput').value = btn.dataset.reason;
+      });
+    });
+
+    backdrop.hidden = false;
+    const close = () => { backdrop.hidden = true; };
+
+    $('#modalOk').onclick = () => {
+      const reason = ($('#penaltyReasonInput').value || '').trim();
+      state.penalties.unshift({
+        id: uid('p'),
+        date: currentDate,
+        amount,
+        reason,
+        createdAt: new Date().toISOString()
+      });
+      saveState();
+      renderToday();
+      close();
+      toast(`已扣 ${amount} ⭐${reason ? ' · ' + reason : ''}`);
+    };
+    $('#modalCancel').onclick = close;
+    backdrop.onclick = (e) => { if (e.target === backdrop) close(); };
   }
 
   function renderStarsPreview() {
     const rec = ensureRecord(currentDate);
     rec.stars = computeStars(rec);
-    const stars = rec.stars;
+    const earned = rec.stars;
+    const penalty = penaltyByDate(currentDate);
+    const eff = Math.max(0, earned - penalty);
     const total = state.template.length;
     const done = Object.values(rec.tasks).filter((e) => e && e.done).length;
 
     const preview = $('#starsPreview');
-    const filled = '⭐'.repeat(stars);
-    const empty = '☆'.repeat(Math.max(0, 5 - stars));
+    const filled = '⭐'.repeat(eff);
+    const empty = '☆'.repeat(Math.max(0, 5 - eff));
     preview.textContent = filled + empty;
 
     const text = $('#completionText');
+    const penaltyHint = penalty > 0 ? ` · 已扣 ${penalty} ⭐` : '';
     if (total === 0) text.textContent = '请先添加作息项';
-    else if (stars === 5) text.textContent = `已完成 ${done}/${total} 项 · 今日修行圆满 🔥`;
-    else if (stars === 0) text.textContent = `已完成 ${done}/${total} 项 · 加油，开始第一项吧！`;
-    else text.textContent = `已完成 ${done}/${total} 项 · 当日 ${stars} 星`;
+    else if (eff === 5) text.textContent = `已完成 ${done}/${total} 项 · 今日修行圆满 🔥${penaltyHint}`;
+    else if (eff === 0 && done === 0) text.textContent = `已完成 ${done}/${total} 项 · 加油，开始第一项吧！${penaltyHint}`;
+    else text.textContent = `已完成 ${done}/${total} 项 · 当日 ${eff} 星${penaltyHint}`;
   }
 
   function initToday() {
@@ -284,6 +389,7 @@
       rec.note = e.target.value;
       saveState();
     });
+    $('#addPenaltyBtn').addEventListener('click', openPenaltyDialog);
   }
 
   // -------- 日历 --------
@@ -319,17 +425,20 @@
     const totalDays = daysBetween(startISO, endISO) + 1;
     for (let i = 0; i < totalDays; i++) {
       const iso = addDays(startISO, i);
-      const rec = getRecord(iso);
-      const stars = rec ? rec.stars : 0;
+      const eff = effectiveStars(iso);
+      const penalty = penaltyByDate(iso);
       const cell = document.createElement('div');
-      cell.className = 'cal-cell s' + stars;
+      cell.className = 'cal-cell s' + eff;
+      if (penalty > 0) cell.classList.add('has-penalty');
       if (iso === todayISO()) cell.classList.add('today');
       if (iso === currentDate) cell.classList.add('current');
       cell.innerHTML = `
         <div class="cal-day">${fromISO(iso).getDate()}</div>
-        <div class="cal-stars">${stars > 0 ? '⭐'.repeat(stars) : '·'}</div>
+        <div class="cal-stars">${eff > 0 ? '⭐'.repeat(eff) : '·'}${penalty > 0 ? '<span class="cal-pen">⚡</span>' : ''}</div>
       `;
-      cell.title = `${iso} ${stars} 星`;
+      cell.title = penalty > 0
+        ? `${iso} · 实得 ${eff} 星（已扣 ${penalty}）`
+        : `${iso} · ${eff} 星`;
       cell.addEventListener('click', () => {
         currentDate = iso;
         switchTab('today');
@@ -422,6 +531,24 @@
     });
   }
 
+  // -------- 扣分 --------
+  function penaltyByDate(iso) {
+    return state.penalties
+      .filter((p) => p.date === iso)
+      .reduce((s, p) => s + (p.amount || 0), 0);
+  }
+
+  function totalPenalty() {
+    return state.penalties.reduce((s, p) => s + (p.amount || 0), 0);
+  }
+
+  // 当日有效星：完成得星 - 当日扣分（不低于 0）
+  function effectiveStars(iso) {
+    const rec = state.records[iso];
+    const base = rec ? (rec.stars || 0) : 0;
+    return Math.max(0, base - penaltyByDate(iso));
+  }
+
   // -------- 奖励 --------
   function totalStars() {
     return Object.values(state.records).reduce((s, r) => s + (r.stars || 0), 0);
@@ -432,12 +559,19 @@
   }
 
   function availableStars() {
-    return totalStars() - spentStars();
+    return Math.max(0, totalStars() - totalPenalty() - spentStars());
   }
 
   function renderRewards() {
-    $('#totalStars').innerHTML = `${totalStars()} <span class="star-emoji">⭐</span>`;
-    $('#availableStars').innerHTML = `${availableStars()} <span class="star-emoji">⭐</span>`;
+    const earned = totalStars();
+    const pen = totalPenalty();
+    const spent = spentStars();
+    const avail = availableStars();
+    $('#totalStars').textContent = `${earned} ⭐`;
+    $('#penaltyStars').textContent = `-${pen} ⭐`;
+    $('#spentStars').textContent = `-${spent} ⭐`;
+    $('#availableStars').textContent = `${avail} ⭐`;
+    $('#rewardFormula').textContent = `${earned}  −  ${pen}  −  ${spent}  =  ${avail}`;
 
     const list = $('#rewardList');
     list.innerHTML = '';
@@ -462,8 +596,9 @@
       redeemBtn.textContent = '兑换';
       redeemBtn.disabled = avail < r.cost;
       redeemBtn.addEventListener('click', () => {
-        if (availableStars() < r.cost) { toast('星星不够哦~'); return; }
-        if (!confirm(`兑换「${r.name}」，花费 ${r.cost} ⭐？`)) return;
+        const before = availableStars();
+        if (before < r.cost) { toast('星星不够哦~'); return; }
+        if (!confirm(`兑换「${r.name}」会扣除 ${r.cost} ⭐\n当前可用 ${before} → 兑换后 ${before - r.cost}\n\n确认兑换？`)) return;
         state.rewards.redeemed.unshift({
           rewardId: r.id,
           name: r.name,
@@ -474,7 +609,8 @@
         saveState();
         renderRewards();
         emitSnowflakes(20);
-        toast(`已兑换 ${r.name}！`);
+        emitStarDeduct(r.cost);
+        toast(`兑换成功 · 扣除 ${r.cost} ⭐`);
       });
       card.appendChild(redeemBtn);
 
@@ -601,6 +737,21 @@
       layer.appendChild(p);
       setTimeout(() => p.remove(), 1000);
     }
+  }
+
+  // 扣星浮空动画：从指定元素位置向上飞出 -N⭐
+  function emitStarDeduct(amount, target) {
+    const layer = $('#fxLayer');
+    const el = target || $('#availableStars');
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const tip = document.createElement('div');
+    tip.className = 'star-deduct';
+    tip.textContent = `-${amount} ⭐`;
+    tip.style.left = (rect.left + rect.width / 2 - 30) + 'px';
+    tip.style.top = (rect.top + rect.height / 2 - 14) + 'px';
+    layer.appendChild(tip);
+    setTimeout(() => tip.remove(), 1400);
   }
 
   function emitSnowflakes(count = 40) {
